@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>En lice !</title>
+		<meta charset="utf-8">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+		<style>
+			body{
+				font-family: 'MedievalSharp', cursive;
+				font-size: 20px;
+				font-weight: 400;
+				background-color: #f2e7bf;
+			;}
+			
+		</style>
+	</head>
+	
+	<body>
+		<div id="text"></div>
+		<button onClick="window.location.reload();window.scroll(0,0);">Une autre histoire ?</button>
+	<script>
+		var text = document.querySelector('#text');
+		
+		function afficher(message){
+			console.log(message);	
+			text.innerHTML +=  '<p>'+ message +'</p>';
+		}
+		
+		/*************Déclarations des objets, méthodes, variable*****************/
+		function Protagoniste(a,b,c,d,e){
+			this.statut = a;
+			this.nom = b;
+			this.pv = c;
+			this.dext = d;
+			this.degat = e;
+		}
+		
+		var fin_boucle=0;
+		var blanc = new Protagoniste("Chevalier", 'blanc', 10, 0, 2);
+		var noir = new Protagoniste("Chevalier", 'noir', 10, 0, 2);
+		
+		
+		afficher('Oyez Oyez Battez-vous pour le roi Arthur !!.<br>'+'Pv du ' + blanc.statut + ' ' + blanc.nom + ' : ' + blanc.pv  +
+				'<br>Pv du ' + noir.statut + ' ' + noir.nom + ' : ' + noir.pv);
+		
+		
+		while(fin_boucle==0)
+		{
+			/*****************DETERMINE LES VALEURS DE DEXTERITE******************/
+			blanc.dext = Math.floor(Math.random() * 10);
+			noir.dext = Math.floor(Math.random() * 10);
+			
+			
+			afficher('Dextérité du ' + blanc.statut + ' ' + blanc.nom + ' : ' + blanc.dext  +
+				'<br>Dextérité du ' + noir.statut + ' ' + noir.nom + ' : ' + noir.dext);
+			
+			/***************Determine le résultat du combat*********************/
+			if(blanc.dext > noir.dext)											//Si le Chevalier blanc a plus de dexterité 
+			{
+				noir.pv = noir.pv - blanc.degat;								//alors le chevalier noir perd des pv
+				afficher('Le chevalier blanc porte un coup au chevalier noir.' +
+					'<br>Il ne reste au chevalier noir que ' + noir.pv + ' pv.' );
+			}
+			else if(noir.dext > blanc.dext)										//Si le Chevalier blanc a moins de dexterité 
+			{
+				blanc.pv = blanc.pv - noir.degat;								//alors le chevalier blanc perd des pv
+				afficher('Le chevalier noir porte un coup au chevalier blanc.' +
+					'<br>Il ne reste au chevalier blanc que ' + blanc.pv + ' pv.' );
+				
+			}
+			else 																//Si les deux ont autant de dextérité									
+			{
+				afficher('les lames des combattants s\'entre choc');				//ex-equo
+			}
+			
+			/******************Indique lequelle à l'ascendant sur l'autre**************/
+			if((noir.pv>0)&&(blanc.pv>0))
+			{
+				if(blanc.pv > noir.pv)
+				{
+					afficher('le chevalier blanc à l\'ascendant sur le chevalier noir');
+				}
+				else if(noir.pv > blanc.pv)
+				{
+					afficher('le chevalier noir à l\'ascendant sur le chevalier blanc');
+				}
+				else if(blanc.pv == noir.pv)
+				{
+					//n'affiche rien
+				}
+				else
+				{
+					afficher('erreur de procédure');
+				}
+			}				
+			else
+			{	
+				
+				if(blanc.pv==0)
+				{
+					afficher('Le chevalier noir terrasse son ennemi');
+					fin_boucle=1;
+				}
+				else if(noir.pv==0)
+				{
+					afficher('Le chevalier blanc terrasse son ennemi');
+					fin_boucle=1;
+				}
+				else
+				{
+					afficher('erreur de procédure ');
+				}	
+				
+			}			
+		}
+		/**************Indique le vainqueur*****************/
+		if(blanc.pv==0)										//Si pv du chevalier blanc =0 alors chevalier noir gagne
+		{
+			afficher('Arthur déclare le chevalier noir vainqueur ');
+			
+		}
+		else if(noir.pv==0)									//Si pv du chevalier noir =0 alors chevalier blanc gagne
+		{
+			afficher('Le chevalier blanc vainqueur ');				
+		}
+		else												
+		{
+			afficher('erreur resultat combat');
+		}
+	</script>	
+	</body>
+	
+</html>
